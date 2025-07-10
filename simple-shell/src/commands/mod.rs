@@ -1,4 +1,5 @@
 pub mod echo;
+pub mod cat;
 
 // use crate::prelude::*;
 // use command_macros::command;

@@ -1,32 +1,36 @@
 #[derive(Debug)]
-struct Input {
+struct Input<'a> {
     command: String,
     flag: String,
-    argument: String,
+    argument: Vec<&'a str>,
 }
 
-impl Input {
-    fn parse_input(line: String) -> Option<Self> {
+impl<'a> Input<'a> {
+    fn new() -> Self {
+        Self {
+            command: "".to_string(),
+            flag: "".to_string(),
+            argument: vec![],
+        }
+    }
+
+    fn parse_input(line: &'a str) -> Option<Self> {
         let res: Vec<&str> = line.split_whitespace().collect();
+        let mut input = Input::new();
 
         if res.len() < 1 {
             return None;
         }
 
+        input.command = res[0].to_string();
+
         if res.len() == 1 {
-            return Some(Self {
-                command: res[0].to_string(),
-                flag: "".to_string(),
-                argument: "".to_string(),
-            });
+            return Some(input);
         }
 
         if res[0] == "echo" {
-            return Some(Self {
-                command: res[0].to_string(),
-                flag: "".to_string(),
-                argument: res[1..].join(" "),
-            });
+            input.argument = res[1..].to_vec();
+            return Some(input);
         }
 
         for (i, v) in res.iter().enumerate() {
@@ -34,19 +38,15 @@ impl Input {
                 continue;
             }
 
-            // check for flags and arguments
+            input.argument.push(v);
         }
 
-        Some(Self {
-            command: res[0].to_string(),
-            flag: "".to_string(),
-            argument: "".to_string(),
-        })
+        Some(input)
     }
 }
 
 pub fn parser_fn(line: String) {
-    let mut input = Input::parse_input(line);
+    let input = Input::parse_input(&line);
 
     match input {
         Some(v) => check_command(v),
@@ -54,11 +54,14 @@ pub fn parser_fn(line: String) {
     }
 }
 
-use crate::commands::echo::echo;
+use std::vec;
+
+use crate::commands::{echo::echo, cat::cat};
 
 fn check_command(input: Input) {
     match input.command.as_str() {
         "echo" => echo(input.argument),
+        "cat" => cat(input.argument),
         _ => println!("Command '{}' not found", input.command),
     }
 }
