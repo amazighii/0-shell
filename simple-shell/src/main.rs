@@ -1,4 +1,5 @@
 mod parser;
+mod commands;
 use std::io::{ self, Write };
 use parser::parser_fn;
 
