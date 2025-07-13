@@ -15,6 +15,10 @@ impl<'a> Input<'a> {
     }
 
     fn parse_input(line: &'a str) -> Option<Self> {
+        // if line.len() < 3 {
+        //     return None;
+        // }
+
         let res: Vec<&str> = line.split_whitespace().collect();
         let mut input = Input::new();
 
@@ -29,7 +33,7 @@ impl<'a> Input<'a> {
         }
 
         if res[0] == "echo" {
-            input.argument = res[1..].to_vec();
+            input.argument = vec![line];
             return Some(input);
         }
 
