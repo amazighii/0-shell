@@ -1,11 +1,20 @@
 pub fn echo(argument: Vec<&str>) {
-    let mut chars = argument[0].trim_end().chars().skip(5).peekable();
+    if argument.is_empty() {
+        println!();
+        return;
+    }
+
+    let line = argument[0];
+    let mut chars = line.trim_end().chars().skip(5).peekable();
     let mut resu = vec![];
     let mut is_quote = false;
     let mut current = String::new();
 
     while let Some(c) = chars.next() {
         match c {
+            '\\' if matches!(chars.peek(), Some('"')) => {
+                current.push(chars.next().unwrap());
+            }
             '"' => {
                 is_quote = !is_quote;
                 continue;

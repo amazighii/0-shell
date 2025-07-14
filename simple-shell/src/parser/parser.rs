@@ -15,10 +15,6 @@ impl<'a> Input<'a> {
     }
 
     fn parse_input(line: &'a str) -> Option<Self> {
-        // if line.len() < 3 {
-        //     return None;
-        // }
-
         let res: Vec<&str> = line.split_whitespace().collect();
         let mut input = Input::new();
 
