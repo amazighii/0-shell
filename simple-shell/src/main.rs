@@ -3,14 +3,29 @@ mod parser;
 use parser::parser_fn;
 use std::io::{self, Write};
 
+        let mut is_ctrlc_pressed = false;
 fn main() {
     loop {
         print!("$ ");
         io::stdout().flush().unwrap();
         let mut line = String::new();
         let stdin = io::stdin();
-        stdin.read_line(&mut line).unwrap();
-        line = complete_line(&mut line);
+
+
+        ctrlc::set_handler(move || {
+            is_ctrlc_pressed = true;
+        })
+        .expect("Error setting ctrl + c handler");
+
+        match stdin.read_line(&mut line) {
+            Ok(n) if n == 0 => {
+                println!("EOF: You are exiting 0-shell");
+                break;
+            }
+            Err(err) => println!("Error: {err}"),
+            Ok(_) => line = complete_line(&mut line),
+        }
+
         parser_fn(line);
     }
 }
