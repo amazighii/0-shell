@@ -1,21 +1,25 @@
 mod commands;
 mod parser;
+use once_cell::sync::Lazy;
 use parser::parser_fn;
 use std::io::{self, Write};
+use std::sync::atomic::{AtomicBool, Ordering};
 
-        let mut is_ctrlc_pressed = false;
+pub static CTRL_C_HIT: Lazy<AtomicBool> = Lazy::new(|| AtomicBool::new(false));
+
 fn main() {
+    ctrlc::set_handler(move || {
+        CTRL_C_HIT.store(true, Ordering::SeqCst);
+        // println!("im in main");
+        // return;
+    })
+    .expect("Error setting ctrl + c handler");
+
     loop {
         print!("$ ");
         io::stdout().flush().unwrap();
         let mut line = String::new();
         let stdin = io::stdin();
-
-
-        ctrlc::set_handler(move || {
-            is_ctrlc_pressed = true;
-        })
-        .expect("Error setting ctrl + c handler");
 
         match stdin.read_line(&mut line) {
             Ok(n) if n == 0 => {

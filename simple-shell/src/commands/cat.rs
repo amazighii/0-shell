@@ -1,15 +1,22 @@
+use crate::CTRL_C_HIT;
 use std::fs::File;
-// use std::io::prelude::*;
 use std::io::{self, prelude::*, Write};
+use std::sync::atomic::Ordering;
+// use std::sync::Arc;
+// use std::thread;
+// use std::time::Duration;
 
 pub fn cat(argument: Vec<&str>) {
-    // println!("{:?}", argument);
     if argument.len() == 0 {
-        // ctrlc::set_handler(move || {
-        //     return;
-        // })
-        // .expect("Error setting ctrl + c handler");
+        CTRL_C_HIT.store(false, Ordering::SeqCst);
+
         loop {
+            if CTRL_C_HIT.load(Ordering::SeqCst) {
+                println!("Ctrl + C has been pressed");
+                CTRL_C_HIT.store(false, Ordering::SeqCst);
+                return;
+            }
+
             io::stdout().flush().unwrap();
             let mut line = String::new();
             let stdin = io::stdin();
