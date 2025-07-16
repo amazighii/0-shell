@@ -1,15 +1,5 @@
 pub mod echo;
 pub mod cat;
 pub mod mkdir;
-
-// use crate::prelude::*;
-// use command_macros::command;
-// use std::sync::Arc;
-
-// #[command]
-// pub async fn ping(ctx: Arc<Context>, msg: &Message, _: Args) -> CommandResult {
-//     msg.channel_id.say(&ctx.http, "Pong!").await?;
-//     Ok(())
-// }
-
-// ...existing code...
+pub mod cd;
+pub mod pwd;
