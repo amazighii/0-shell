@@ -6,6 +6,7 @@ use std::env::current_dir;
 use std::io::{self, Write};
 use std::sync::atomic::{AtomicBool, Ordering};
 mod utils;
+use crate::commands::exit::EXIT;
 use crate::utils::*;
 
 pub static CTRL_C_HIT: Lazy<AtomicBool> = Lazy::new(|| AtomicBool::new(false));
@@ -17,6 +18,9 @@ fn main() {
     .expect("Error setting ctrl + c handler");
 
     loop {
+        if EXIT.load(Ordering::SeqCst) {
+            break;
+        }
         match current_dir() {
             Ok(path) => print!("{}$ ", path.display()),
             Err(err) => println!("pwd err: {}", err),
