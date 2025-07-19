@@ -56,7 +56,7 @@ pub fn parser_fn(line: String) {
 
 use std::vec;
 
-use crate::commands::{cat::cat, echo::echo, mkdir::mkdir, cd::cd, pwd::pwd};
+use crate::commands::{cat::cat, cd::cd, cp::cp, echo::echo, mkdir::mkdir, pwd::pwd};
 
 fn check_command(input: Input) {
     match input.command.as_str() {
@@ -64,8 +64,8 @@ fn check_command(input: Input) {
         "cat" => cat(input.argument),
         "mkdir" => mkdir(input.argument),
         "cd" => cd(input.argument),
+        "cp" => cp(input.argument),
         "pwd" => pwd(),
         _ => println!("Command '{}' not found", input.command),
     }
 }
-
