@@ -5,3 +5,4 @@ pub mod cd;
 pub mod pwd;
 pub mod cp;
 pub mod exit;
+pub mod mv;
