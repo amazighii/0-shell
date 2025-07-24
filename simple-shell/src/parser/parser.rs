@@ -33,8 +33,16 @@ impl<'a> Input<'a> {
             return Some(input);
         }
 
+
+        // println!("res: {:?}", res);
+
         for (i, v) in res.iter().enumerate() {
             if i == 0 {
+                continue;
+            }
+
+            if v.starts_with("-") {
+                input.flag.push_str(v);
                 continue;
             }
 
@@ -57,7 +65,8 @@ pub fn parser_fn(line: String) {
 use std::vec;
 
 use crate::commands::{
-    cat::cat, cd::cd, cp::cp, echo::echo, exit::exit, mkdir::mkdir, mv::mv, pwd::pwd,
+    cat::cat, cd::cd, cp::cp, echo::echo, exit::exit, mkdir::mkdir, mv::mv, pwd::pwd, rm::rm,
+    touch::touch,
 };
 
 fn check_command(input: Input) {
@@ -68,6 +77,8 @@ fn check_command(input: Input) {
         "cd" => cd(input.argument),
         "cp" => cp(input.argument),
         "mv" => mv(input.argument),
+        "rm" => rm(input.argument, &input.flag),
+        "touch" => touch(input.argument),
         "pwd" => pwd(),
         "exit" => exit(),
         _ => println!("Command '{}' not found", input.command),

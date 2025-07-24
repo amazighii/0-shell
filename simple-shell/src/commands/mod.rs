@@ -6,3 +6,5 @@ pub mod pwd;
 pub mod cp;
 pub mod exit;
 pub mod mv;
+pub mod rm;
+pub mod touch;
