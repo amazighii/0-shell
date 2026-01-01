@@ -8,12 +8,6 @@ Inspired by tools like BusyBox, this project focuses on understanding how a shel
 
 ---
 
-## Project Role
-
-You are a system-level developer assigned to build a lightweight, standalone Unix shell suitable for an embedded Linux environment. The shell must handle basic navigation, file manipulation, and process control while faithfully mimicking essential Unix shell behavior.
-
----
-
 ## Learning Objectives
 
 - Work with file and directory operations
@@ -43,7 +37,6 @@ The shell implements the following commands:
 
 - echo
 - cd
-- directory listing (supports -l, -a, and -F)
 - pwd
 - cat
 - cp
@@ -60,28 +53,10 @@ Command '<name>' not found
 
 ## Constraints
 
-- Only basic command syntax is required
+- Only basic command
 - No piping (|), redirection (>, <), or globbing (*)
-- Shell behavior should follow standard Unix conventions
-- Code must follow good coding practices
-- External binaries and system calls that spawn them are not allowed
-
----
-
-## Bonus Features
-
-The following features are considered bonuses if implemented:
-
-- Graceful handling of Ctrl+C (SIGINT)
-- Command history
-- Auto-completion
-- Prompt displaying the current directory
-- Colorized output for files, directories, and errors
-- Command chaining with ;
-- Pipes (|)
-- I/O redirection (>, <)
-- Environment variable support (e.g. $HOME, $PATH)
-- A custom help command documenting built-in functionality
+- Shell behavior follows standard Unix conventions
+- Code is following good coding practices
 
 ---
 
@@ -136,10 +111,6 @@ cargo --version
 
 cargo build
 
-For an optimized binary:
-
-cargo build --release
-
 ---
 
 ### Run
@@ -147,25 +118,6 @@ cargo build --release
 Run using Cargo:
 
 cargo run
-
-Or run the compiled binary directly:
-
-./target/debug/0-shell
-
-For the release build:
-
-./target/release/0-shell
-
----
-
-## Evaluation Criteria
-
-This project is evaluated based on:
-
-- Functionality: commands behave like their Unix counterparts
-- Stability: the shell handles invalid input and edge cases without crashing
-- Correctness: proper prompt behavior and accurate error messages
-- Code quality: clean structure and idiomatic Rust
 
 ---
 
