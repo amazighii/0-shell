@@ -100,8 +100,6 @@ student$
 
 ---
 ## Project structure
-# 0-shell
-
 ```
 📁 simple-shell
 ├── 📁 src
